@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useAppContext } from "./utils/global.context";
 import { Link } from "react-router-dom";
 
@@ -6,20 +7,33 @@ import { Link } from "react-router-dom";
 const Navbar = () => {
 
   const { state, dispatch } = useAppContext();
+  const [isOpen, setIsOpen] = useState(false);
 
   const toggleTheme = () => {
     dispatch({ type: 'TOGGLE_THEME' });
   };
 
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
-    <nav className={`flex justify-around items-center p-4 mb-8 w-full shadow-md ${state.theme === 'dark' ? 'bg-gray-800' : 'bg-white'} `}>
-      <div className="flex-shrink-0 flex items-center">
+    <nav className={`flex justify-around items-center content-center p-4 mb-8 w-full shadow-md ${state.theme === 'dark' ? 'bg-gray-800' : 'bg-white'} `}>
+      <div className={`flex-shrink-0 flex items-center ${isOpen ? 'hidden' : 'block'} md:block`}>
         <span className={`text-3xl font-bold ${state.theme === 'dark' ? 'text-white' : 'text-gray-800'}`}>
           <span className="text-red-600 ">D</span>H Odonto
         </span>
       </div>
 
-      <div className="flex items-center">
+      <div className="md:hidden">
+        <button onClick={toggleMenu} className={`${state.theme === 'dark' ? 'text-white' : 'text-gray-800'}`}>
+          <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16m-7 6h7" />
+          </svg>
+        </button>
+      </div>
+
+      <div className={`${isOpen ? 'flex' : 'hidden'} md:flex`}>
         <Link to="/" className={`px-3 py-2 rounded-md text-md font-medium ${state.theme === 'dark' ? 'text-gray-200 hover:text-white hover:bg-gray-700' : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50'}`}>Home</Link>
         <Link to="/contact" className={`px-3 py-2 rounded-md text-md font-medium ${state.theme === 'dark' ? 'text-gray-200 hover:text-white hover:bg-gray-700' : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50'}`}>Contact</Link>
         <Link to="/favs" className={`px-3 py-2 rounded-md text-md font-medium ${state.theme === 'dark' ? 'text-gray-200 hover:text-white hover:bg-gray-700' : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50'}`}>Favs</Link>
@@ -38,8 +52,6 @@ const Navbar = () => {
             </svg>
           )}
         </button>
-
-
       </div>
     </nav>
   )
