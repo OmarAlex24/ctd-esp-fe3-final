@@ -11,7 +11,8 @@ export const ContextProvider = ({ children }) => {
 
   useEffect(() => {
     localStorage.setItem("favs", JSON.stringify(state.favs));
-  }, [state.favs]);
+    localStorage.setItem("theme", state.theme);
+  }, [state.favs, state.theme]);
 
   return (
     <ContextGlobal.Provider value={value}>

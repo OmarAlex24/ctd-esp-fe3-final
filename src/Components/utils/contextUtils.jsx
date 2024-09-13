@@ -1,8 +1,10 @@
 const lsFavs = JSON.parse(localStorage.getItem("favs")) || [];
 
+const lsTheme = localStorage.getItem("theme") || 'light';
+
 
 export const initialState = {
-  theme: 'light',
+  theme: lsTheme,
   dentists: [],
   favs: lsFavs,
 };
